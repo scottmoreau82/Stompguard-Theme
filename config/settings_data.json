@@ -1,6 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "ga4_id": "G-X9ZZTRCH2M"
+    "ga4_id": "G-X9ZZTRCH2M",
+    "sections": {
+      "section-nav": {
+        "type": "section-nav",
+        "settings": {
+          "logo": "shopify://shop_images/RoboLogoSVGfinal.png",
+          "wordmark": "StompGuard",
+          "tagline": "Pedal Protection Systems",
+          "contact_page": ""
+        }
+      },
+      "section-footer": {
+        "type": "section-footer",
+        "settings": {
+          "wordmark": "StompGuard",
+          "tagline": "Pedal Protection Systems",
+          "brand_blurb": "Your source for premium pedal protection. US based for fast order fulfillment and exceptional customer service.",
+          "version_tag": "SG-v2.0"
+        }
+      }
+    },
+    "content_for_index": []
   },
   "presets": {}
 }
