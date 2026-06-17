@@ -65,6 +65,7 @@
     },
     "mission-banner": {
       "type": "section-mission-banner",
+      "disabled": true,
       "settings": {
         "title": "Your Gear Deserves Protection.",
         "subtitle": "One accident can take your rig offline for good. Don't let it happen.",
