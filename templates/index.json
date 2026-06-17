@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "nav": { "type": "section-nav" },
+    "hero": { "type": "section-hero" },
+    "products": { "type": "section-products" },
+    "field-report": { "type": "section-field-report" },
+    "reviews": { "type": "section-reviews" },
+    "mission-banner": { "type": "section-mission-banner" },
+    "email-capture": { "type": "section-email-capture" },
+    "footer": { "type": "section-footer" }
+  },
+  "order": [
+    "nav",
+    "hero",
+    "products",
+    "field-report",
+    "reviews",
+    "mission-banner",
+    "email-capture",
+    "footer"
+  ]
+}
