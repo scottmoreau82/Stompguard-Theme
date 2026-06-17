@@ -90,14 +90,14 @@
           "settings": {
             "title": "Support",
             "link_labels": "Link Labels: Contact Us|Shipping Info|Returns|FAQ",
-            "link_urls": "Link URLs: /pages/contact-page|#|#|#"
+            "link_urls": "/pages/contact-page|#|#|#"
           }
         },
         "link_column_QRMFNE": {
           "type": "link_column",
           "settings": {
-            "title": "Shop",
-            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
+            "title": "Company",
+            "link_labels": "About|Privacy Policy|Terms of Service",
             "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
           }
         }
