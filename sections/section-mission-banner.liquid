@@ -1,0 +1,85 @@
+{% comment %} StompGuard — Mission Banner {% endcomment %}
+
+<style>
+  #sg-mission-banner {
+    background: var(--surface2);
+    border-top: 1px solid rgba(200,200,200,0.06);
+    border-bottom: 1px solid rgba(200,200,200,0.06);
+    padding: 6rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #sg-mission-banner::before {
+    content: 'STOMPGUARD';
+    position: absolute;
+    left: -2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-head);
+    font-size: clamp(5rem, 14vw, 11rem);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,200,200,0.04);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #sg-mission-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 4px;
+    background: linear-gradient(180deg, transparent, var(--red), transparent);
+  }
+  #sg-mission-banner .mission-text { position: relative; z-index: 2; }
+  #sg-mission-banner .mission-title {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--chrome-hi);
+    margin-bottom: 0.8rem;
+  }
+  #sg-mission-banner .mission-sub { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); letter-spacing: 0.05em; max-width: 400px; line-height: 1.7; }
+  #sg-mission-banner .btn-mission {
+    background: var(--red);
+    color: var(--chrome-hi);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    border: 1px solid var(--red-hi);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: background 0.2s, transform 0.15s;
+  }
+  #sg-mission-banner .btn-mission:hover { background: var(--red-hi); transform: translateY(-2px); }
+  @media (max-width: 600px) { #sg-mission-banner { flex-direction: column; padding: 3rem 1.5rem; } }
+</style>
+
+<section id="sg-mission-banner">
+  <div class="mission-text">
+    <h2 class="mission-title">{{ section.settings.title }}</h2>
+    <p class="mission-sub">{{ section.settings.subtitle }}</p>
+  </div>
+  <a href="#sg-products-section" class="btn-mission">{{ section.settings.cta_label }} &rarr;</a>
+</section>
+
+{% schema %}
+{
+  "name": "Mission Banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title (use line break with two lines)", "default": "Your Gear Deserves Protection." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "One accident can take your rig offline for good. Don't let it happen." },
+    { "type": "text", "id": "cta_label", "label": "Button Label", "default": "Shop Protectors" }
+  ],
+  "presets": [ { "name": "Mission Banner" } ]
+}
+{% endschema %}
