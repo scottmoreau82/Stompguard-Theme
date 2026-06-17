@@ -1,0 +1,32 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "StompGuard",
+    "theme_version": "1.0.0",
+    "theme_author": "StompGuard",
+    "theme_documentation_url": "https://stompguard.com",
+    "theme_support_url": "https://stompguard.com"
+  },
+  {
+    "name": "Analytics",
+    "settings": [
+      {
+        "type": "text",
+        "id": "ga4_id",
+        "label": "Google Analytics 4 ID",
+        "default": "G-X9ZZTRCH2M"
+      }
+    ]
+  },
+  {
+    "name": "Social Sharing",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "og_image",
+        "label": "Default social share image",
+        "info": "Used for Open Graph / Twitter cards on non-product pages. Recommended 1200x630."
+      }
+    ]
+  }
+]
