@@ -84,6 +84,37 @@
     },
     "footer": {
       "type": "section-footer",
+      "blocks": {
+        "link_column_PRWrtc": {
+          "type": "link_column",
+          "settings": {
+            "title": "Shop",
+            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
+            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
+          }
+        },
+        "link_column_PTrP9r": {
+          "type": "link_column",
+          "settings": {
+            "title": "Shop",
+            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
+            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
+          }
+        },
+        "link_column_QRMFNE": {
+          "type": "link_column",
+          "settings": {
+            "title": "Shop",
+            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
+            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
+          }
+        }
+      },
+      "block_order": [
+        "link_column_PRWrtc",
+        "link_column_PTrP9r",
+        "link_column_QRMFNE"
+      ],
       "settings": {
         "logo": "shopify://shop_images/RoboLogoSVGfinal.png",
         "wordmark": "StompGuard",
