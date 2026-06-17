@@ -1,0 +1,50 @@
+{% section 'section-nav' %}
+
+<main style="padding:7rem 2rem 4rem;max-width:1100px;margin:0 auto;min-height:60vh;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
+    <div style="background:var(--surface2);border:1px solid rgba(200,200,200,0.08);overflow:hidden;clip-path:polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));">
+      <img id="sg-pdp-main" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.featured_image.alt | escape }}" style="width:100%;aspect-ratio:1;object-fit:cover;filter:contrast(1.1) saturate(0.85);"/>
+      {% if product.images.size > 1 %}
+        <div style="display:flex;gap:6px;padding:8px;background:var(--surface2);flex-wrap:wrap;">
+          {% for image in product.images %}
+            <img src="{{ image | image_url: width: 120 }}" alt="" onclick="document.getElementById('sg-pdp-main').src='{{ image | image_url: width: 800 }}'" style="width:64px;height:64px;object-fit:cover;border:1px solid var(--gunmetal);cursor:pointer;"/>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <div style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.25em;color:var(--muted);text-transform:uppercase;margin-bottom:0.5rem;">{{ product.variants.first.sku }}</div>
+      <h1 style="font-family:var(--font-head);font-size:2.4rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--chrome-hi);line-height:1.05;margin-bottom:1rem;">{{ product.title }}</h1>
+      <div style="font-family:var(--font-mono);font-size:1.8rem;color:var(--chrome-hi);margin-bottom:1.5rem;">{{ product.price | money }}</div>
+
+      {% form 'product', product %}
+        {% if product.variants.size > 1 %}
+          <select name="id" style="background:var(--surface2);border:1px solid var(--gunmetal);color:var(--text);font-family:var(--font-mono);font-size:0.8rem;padding:10px 14px;width:100%;margin-bottom:1rem;">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>{{ variant.title }} — {{ variant.price | money }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {% endif %}
+
+        <button type="submit" {% unless product.available %}disabled{% endunless %}
+          style="width:100%;background:var(--red);color:var(--chrome-hi);font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;padding:16px;border:1px solid var(--red-hi);cursor:pointer;clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));">
+          {% if product.available %}Add to Cart &rarr;{% else %}Sold Out{% endif %}
+        </button>
+      {% endform %}
+
+      <div style="font-family:var(--font-body);font-weight:300;font-size:0.9rem;color:var(--muted);line-height:1.8;margin-top:2rem;">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:3rem;"><a href="{{ routes.root_url }}" style="font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.15em;color:var(--chrome-lo);text-transform:uppercase;">&larr; Back to Home</a></p>
+</main>
+
+{% section 'section-footer' %}
+
+<style>
+  @media (max-width:768px){ main > div { grid-template-columns:1fr !important; } }
+</style>
