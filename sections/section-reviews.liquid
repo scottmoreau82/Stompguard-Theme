@@ -1,0 +1,189 @@
+{% comment %} StompGuard — Reviews (live Reverb via Worker proxy) {% endcomment %}
+
+<style>
+  #sg-reviews { background: var(--black); padding: 7rem 5rem; }
+  #sg-reviews .intel-header { text-align: center; margin-bottom: 3.5rem; }
+  #sg-reviews .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+  #sg-reviews .section-eyebrow::before { content: '//'; color: var(--chrome-lo); }
+  #sg-reviews .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--chrome-hi);
+    line-height: 0.95;
+    text-align: center;
+  }
+  #sg-reviews .intel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(200,200,200,0.05); }
+  #sg-reviews .intel-card { background: var(--surface); padding: 2rem; position: relative; }
+  #sg-reviews .intel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+  #sg-reviews .intel-stars { color: var(--chrome-lo); font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 1rem; }
+  #sg-reviews .intel-quote { font-size: 0.88rem; line-height: 1.75; color: var(--text); font-weight: 300; font-style: italic; margin-bottom: 1.5rem; opacity: 0.85; }
+  #sg-reviews .intel-source { display: flex; align-items: center; gap: 10px; }
+  #sg-reviews .intel-avatar {
+    width: 36px; height: 36px;
+    background: var(--surface2);
+    border: 1px solid rgba(200,200,200,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--chrome-lo);
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+  #sg-reviews .intel-name { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--chrome-hi); }
+  #sg-reviews .intel-unit { font-size: 0.76rem; color: var(--muted); margin-top: 2px; font-family: var(--font-mono); }
+  #sg-reviews .intel-date { font-size: 0.72rem; color: var(--muted); opacity: 0.6; font-family: var(--font-mono); margin-top: 2px; }
+  #sg-reviews .intel-source-badge { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; border: 1px solid var(--gunmetal); color: var(--muted); margin-left: auto; align-self: flex-start; }
+  #sg-reviews .intel-source-badge.etsy { border-color: #F1641E44; color: #F1641E; }
+  #sg-reviews .intel-source-badge.reverb { border-color: #37a94944; color: #37a949; }
+  #sg-reviews .intel-photos { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+  #sg-reviews .intel-photo { width: 60px; height: 60px; object-fit: cover; border: 1px solid var(--gunmetal); opacity: 0.85; cursor: pointer; transition: opacity 0.2s; }
+  #sg-reviews .intel-photo:hover { opacity: 1; }
+  #sg-reviews .intel-loading { text-align: center; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); padding: 3rem; letter-spacing: 0.1em; }
+  #sg-reviews .intel-nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 2rem; }
+  #sg-reviews .intel-nav-btn { background: none; border: 1px solid var(--gunmetal); color: var(--muted); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.1em; padding: 8px 16px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+  #sg-reviews .intel-nav-btn:hover { border-color: var(--chrome-lo); color: var(--chrome); }
+  #sg-reviews .intel-nav-dots { display: flex; gap: 6px; }
+  #sg-reviews .intel-nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gunmetal); cursor: pointer; transition: background 0.2s; border: none; }
+  #sg-reviews .intel-nav-dot.active { background: var(--red); }
+  #sg-reviews .intel-platform-links { display: flex; justify-content: center; gap: 24px; margin-top: 1.5rem; }
+  #sg-reviews .intel-platform-link { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  #sg-reviews .intel-platform-link:hover { color: var(--chrome); }
+  @media (max-width: 900px) { #sg-reviews .intel-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { #sg-reviews { padding: 4rem 1.5rem; } }
+</style>
+
+<section id="sg-reviews">
+  <div class="intel-header">
+    <div class="section-eyebrow">{{ section.settings.eyebrow }}</div>
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+  </div>
+  <div class="intel-grid" id="sg-reviewGrid">
+    <div class="intel-loading" style="grid-column:1/-1">Loading reviews...</div>
+  </div>
+  <div class="intel-nav" id="sg-reviewNav" style="display:none">
+    <button class="intel-nav-btn" onclick="sgReviewPage(-1)">&larr; Prev</button>
+    <div class="intel-nav-dots" id="sg-reviewDots"></div>
+    <button class="intel-nav-btn" onclick="sgReviewPage(1)">Next &rarr;</button>
+  </div>
+  <div class="intel-platform-links">
+    <a class="intel-platform-link" href="{{ section.settings.etsy_url }}" target="_blank" rel="noopener">&#9733; View on Etsy &rarr;</a>
+    <a class="intel-platform-link" href="{{ section.settings.reverb_url }}" target="_blank" rel="noopener">&#9733; View on Reverb &rarr;</a>
+  </div>
+</section>
+
+<script>
+  var SG_REVIEWS_ENDPOINT = {{ section.settings.reviews_endpoint | json }};
+  var sgAllReviews = [];
+  var sgReviewCurrentPage = 0;
+  var sgReviewPerPage = 3;
+  var sgReviewTimer = null;
+
+  var sgReviewFallback = [
+    { source:'etsy', rating:5, author:'Mike R.', product:'Quad Cortex StompGuard', date:'2024-11-12',
+      text:'"Finally a protector that actually fits my Quad Cortex perfectly. No more worrying about accidental stomps wiping out my presets mid-set."', photos:[], url:'https://www.etsy.com/shop/stompguard' },
+    { source:'reverb', rating:5, author:'Jason L.', product:'Magnetic Quad Cortex w/ Screen Shield', date:'2024-10-03',
+      text:'"The magnetic version is genius. Snaps on and off in seconds and the screen protection is crystal clear. Worth every penny for touring players."', photos:[], url:'https://reverb.com/shop/stompguard' },
+    { source:'etsy', rating:5, author:'Dan S.', product:'Nano Cortex StompGuard', date:'2024-09-18',
+      text:'"Super fast shipping and the build quality is excellent. Exactly what I needed to protect my Nano Cortex at the edge of my pedalboard."', photos:[], url:'https://www.etsy.com/shop/stompguard' }
+  ];
+
+  function sgStarsHtml(n) { var s=''; for(var i=0;i<5;i++) s += i<n ? '\u2605' : '\u2606'; return s; }
+  function sgInitials(name) { var p=name.split(' '); return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+  function sgFormatDate(d) { if(!d) return ''; var dt=new Date(d); return dt.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
+
+  function sgRenderReviews() {
+    var grid = document.getElementById('sg-reviewGrid');
+    var nav = document.getElementById('sg-reviewNav');
+    var dots = document.getElementById('sg-reviewDots');
+    if(!sgAllReviews.length) { grid.innerHTML='<div class="intel-loading" style="grid-column:1/-1">No reviews yet.</div>'; return; }
+    var pages = Math.ceil(sgAllReviews.length / sgReviewPerPage);
+    var start = sgReviewCurrentPage * sgReviewPerPage;
+    var slice = sgAllReviews.slice(start, start + sgReviewPerPage);
+    grid.innerHTML = slice.map(function(r) {
+      var photos = (r.photos||[]).slice(0,3).map(function(p){
+        return '<img class="intel-photo" src="'+p+'" alt="Review photo" data-url="'+r.url+'" onclick="window.open(this.dataset.url,\'_blank\')">';
+      }).join('');
+      return '<div class="intel-card">'
+        + '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem">'
+        + '<div class="intel-stars">'+sgStarsHtml(r.rating)+'</div>'
+        + '<span class="intel-source-badge '+r.source+'">'+r.source+'</span>'
+        + '</div>'
+        + (photos ? '<div class="intel-photos">'+photos+'</div>' : '')
+        + '<p class="intel-quote">'+r.text+'</p>'
+        + '<div class="intel-source">'
+        + '<div class="intel-avatar">'+sgInitials(r.author)+'</div>'
+        + '<div>'
+        + '<div class="intel-name">'+r.author+'</div>'
+        + '<div class="intel-unit">'+r.product+'</div>'
+        + '<div class="intel-date">'+sgFormatDate(r.date)+'</div>'
+        + '</div></div></div>';
+    }).join('');
+    dots.innerHTML = '';
+    for(var i=0;i<pages;i++){
+      var btn = document.createElement('button');
+      btn.className = 'intel-nav-dot' + (i===sgReviewCurrentPage?' active':'');
+      btn.onclick = (function(p){ return function(){ sgReviewCurrentPage=p; sgRenderReviews(); sgResetReviewTimer(); }; })(i);
+      dots.appendChild(btn);
+    }
+    nav.style.display = pages > 1 ? 'flex' : 'none';
+  }
+
+  function sgReviewPage(dir) {
+    var pages = Math.ceil(sgAllReviews.length / sgReviewPerPage);
+    sgReviewCurrentPage = (sgReviewCurrentPage + dir + pages) % pages;
+    sgRenderReviews();
+    sgResetReviewTimer();
+  }
+
+  function sgResetReviewTimer() {
+    if(sgReviewTimer) clearInterval(sgReviewTimer);
+    sgReviewTimer = setInterval(function(){ sgReviewPage(1); }, 10000);
+  }
+
+  function sgLoadReviews() {
+    if (!SG_REVIEWS_ENDPOINT) { sgAllReviews = sgReviewFallback; sgRenderReviews(); sgResetReviewTimer(); return; }
+    var controller = new AbortController();
+    var timeout = setTimeout(function(){ controller.abort(); }, 5000);
+    fetch(SG_REVIEWS_ENDPOINT, { signal: controller.signal })
+      .then(function(res){ clearTimeout(timeout); if(!res.ok) throw new Error('fetch failed'); return res.json(); })
+      .then(function(data){ sgAllReviews = (data.reviews && data.reviews.length > 0) ? data.reviews : sgReviewFallback; })
+      .catch(function(){ sgAllReviews = sgReviewFallback; })
+      .finally(function(){ sgRenderReviews(); sgResetReviewTimer(); });
+  }
+
+  document.addEventListener('DOMContentLoaded', sgLoadReviews);
+</script>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Reviews" },
+    { "type": "text", "id": "title", "label": "Title", "default": "What Players Are Saying" },
+    { "type": "text", "id": "reviews_endpoint", "label": "Reviews Worker Endpoint", "info": "Cloudflare Worker /reviews proxy URL that returns { reviews: [...] }", "default": "https://stompguard-site.scottmoreau82.workers.dev/reviews" },
+    { "type": "text", "id": "etsy_url", "label": "Etsy Shop URL", "default": "https://www.etsy.com/shop/stompguard" },
+    { "type": "text", "id": "reverb_url", "label": "Reverb Shop URL", "default": "https://reverb.com/shop/stompguard/feedback" }
+  ],
+  "presets": [ { "name": "Reviews" } ]
+}
+{% endschema %}
