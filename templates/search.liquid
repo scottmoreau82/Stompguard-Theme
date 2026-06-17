@@ -1,0 +1,15 @@
+{% section 'section-nav' %}
+<main style="padding:7rem 2rem 4rem;max-width:1100px;margin:0 auto;min-height:60vh;">
+  <h1 style="font-family:var(--font-head);font-size:2rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--chrome-hi);margin-bottom:1.5rem;">Search</h1>
+  <form action="{{ routes.search_url }}" method="get" style="margin-bottom:2rem;">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search..." style="background:var(--surface2);border:1px solid var(--gunmetal);color:var(--text);font-family:var(--font-mono);font-size:0.85rem;padding:12px 16px;width:100%;max-width:400px;"/>
+  </form>
+  {% if search.performed %}
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;">
+      {% for item in search.results %}
+        <a href="{{ item.url }}" style="background:var(--surface);border:1px solid rgba(200,200,200,0.06);padding:1rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--chrome-hi);">{{ item.title }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</main>
+{% section 'section-footer' %}
