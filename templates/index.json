@@ -27,8 +27,9 @@
         "spec_label": "WHAT IT DOES",
         "spec_body": "Precision-cut acrylic protectors for your most valuable gear. Engineered for gigging musicians who protect their gear on stage and in the studio.",
         "cta_label": "Shop Now",
+        "hero_image": "shopify://shop_images/RoboLogoSVGfinal.png",
         "hero_image_alt": "StompGuard on stage",
-        "collection": "",
+        "collection": "protective-covers",
         "ticker_text": "US Based Operations|Premium Acrylic Construction|Precision Laser Cut|Rapid Order Fulfillment|Neural DSP Specialists|Gig-Ready Protection"
       }
     },
