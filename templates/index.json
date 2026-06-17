@@ -1,13 +1,92 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "nav": { "type": "section-nav" },
-    "hero": { "type": "section-hero" },
-    "products": { "type": "section-products" },
-    "field-report": { "type": "section-field-report" },
-    "reviews": { "type": "section-reviews" },
-    "mission-banner": { "type": "section-mission-banner" },
-    "email-capture": { "type": "section-email-capture" },
-    "footer": { "type": "section-footer" }
+    "nav": {
+      "type": "section-nav",
+      "settings": {
+        "wordmark": "StompGuard",
+        "tagline": "Pedal Protection Systems",
+        "contact_page": ""
+      }
+    },
+    "hero": {
+      "type": "section-hero",
+      "settings": {
+        "eyebrow": "Premium Pedal Protection",
+        "title_line1": "Protect",
+        "title_line2": "Your",
+        "title_line3": "Signal.",
+        "spec_label": "WHAT IT DOES",
+        "spec_body": "Precision-cut acrylic protectors for your most valuable gear. Engineered for gigging musicians who protect their gear on stage and in the studio.",
+        "cta_label": "Shop Now",
+        "hero_image_alt": "StompGuard on stage",
+        "collection": "",
+        "ticker_text": "US Based Operations|Premium Acrylic Construction|Precision Laser Cut|Rapid Order Fulfillment|Neural DSP Specialists|Gig-Ready Protection"
+      }
+    },
+    "products": {
+      "type": "section-products",
+      "settings": {
+        "eyebrow": "Product Catalog",
+        "title": "Protective Covers",
+        "collection": "protective-covers"
+      }
+    },
+    "field-report": {
+      "type": "section-field-report",
+      "settings": {
+        "eyebrow": "Why StompGuard",
+        "title": "Built for Serious Players",
+        "intro": "Your pedalboard is your livelihood. StompGuard protectors are precision-manufactured to keep your gear safe through knocks, liquid, and the chaos of live performance.",
+        "image_alt": "StompGuard on stage",
+        "stamp_num": "100%",
+        "stamp_label": "Satisfaction Guaranteed"
+      }
+    },
+    "reviews": {
+      "type": "section-reviews",
+      "settings": {
+        "eyebrow": "Customer Reviews",
+        "title": "What Players Are Saying",
+        "reviews_endpoint": "https://stompguard-site.scottmoreau82.workers.dev/reviews",
+        "etsy_url": "https://www.etsy.com/shop/stompguard",
+        "reverb_url": "https://reverb.com/shop/stompguard/feedback"
+      }
+    },
+    "mission-banner": {
+      "type": "section-mission-banner",
+      "settings": {
+        "title": "Your Gear Deserves Protection.",
+        "subtitle": "One accident can take your rig offline for good. Don't let it happen.",
+        "cta_label": "Shop Protectors"
+      }
+    },
+    "email-capture": {
+      "type": "section-email-capture",
+      "settings": {
+        "eyebrow": "Stay in the loop",
+        "title": "Gear News. No Noise.",
+        "subtitle": "New products, restocks, and exclusive offers. One email. Unsubscribe anytime.",
+        "button_label": "Subscribe"
+      }
+    },
+    "footer": {
+      "type": "section-footer",
+      "settings": {
+        "wordmark": "StompGuard",
+        "tagline": "Pedal Protection Systems",
+        "brand_blurb": "Your source for premium pedal protection. US based for fast order fulfillment and exceptional customer service.",
+        "version_tag": "SG-v2.0"
+      }
+    }
   },
   "order": [
     "nav",
