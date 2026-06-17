@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="canonical" href="{{ canonical_url }}">
+
+<title>
+  {{ page_title }}
+  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+  {%- unless page_title contains shop.name %} &mdash; {{ shop.name }}{% endunless -%}
+</title>
+
+{% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+{% endif %}
+
+{% render 'meta-tags' %}
+
+<!-- Google Analytics GA4 -->
+{% if settings.ga4_id != blank %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.ga4_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ settings.ga4_id }}');
+</script>
+{% endif %}
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --black:     #080808;
+  --surface:   #111111;
+  --surface2:  #1a1a1a;
+  --gunmetal:  #2a2a2a;
+  --chrome:    #C8C8C8;
+  --chrome-hi: #E8E8E8;
+  --chrome-lo: #888888;
+  --red:       #8B0000;
+  --red-hi:    #B00000;
+  --text:      #F0F0F0;
+  --muted:     #777777;
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  overflow-x: hidden;
+  cursor: crosshair;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer { margin-top: auto; }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: crosshair; font-family: inherit; }
+
+/* -- SCANLINE OVERLAY -- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 9996;
+}
+
+/* -- HEX GRID TEXTURE -- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0 L45 0 L60 26 L45 52 L15 52 L0 26Z' fill='none' stroke='rgba(200,200,200,0.03)' stroke-width='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9995;
+  opacity: 1;
+}
+</style>
+
+{{ content_for_header }}
+</head>
+
+<body class="template-{{ template.name }}">
+  {{ content_for_layout }}
+</body>
+</html>
