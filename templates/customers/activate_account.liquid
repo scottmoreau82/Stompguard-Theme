@@ -1,0 +1,11 @@
+{% section 'section-nav' %}
+<main style="padding:7rem 2rem 4rem;max-width:440px;margin:0 auto;min-height:60vh;">
+  <h1 style="font-family:var(--font-head);font-size:2rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--chrome-hi);margin-bottom:1.5rem;">Activate Account</h1>
+  {% form 'activate_customer_password' %}
+    {{ form.errors | default_errors }}
+    <input type="password" name="customer[password]" placeholder="Password" style="background:var(--surface2);border:1px solid var(--gunmetal);color:var(--text);font-family:var(--font-mono);font-size:0.8rem;padding:12px;width:100%;margin-bottom:1rem;"/>
+    <input type="password" name="customer[password_confirmation]" placeholder="Confirm password" style="background:var(--surface2);border:1px solid var(--gunmetal);color:var(--text);font-family:var(--font-mono);font-size:0.8rem;padding:12px;width:100%;margin-bottom:1rem;"/>
+    <button type="submit" style="width:100%;background:var(--red);color:var(--chrome-hi);font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.2em;text-transform:uppercase;padding:14px;border:1px solid var(--red-hi);cursor:pointer;">Activate</button>
+  {% endform %}
+</main>
+{% section 'section-footer' %}
