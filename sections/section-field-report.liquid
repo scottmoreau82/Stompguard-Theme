@@ -1,0 +1,291 @@
+{% comment %} StompGuard — Field Report (Why StompGuard) Section {% endcomment %}
+
+<style>
+  #sg-field-report {
+    background: var(--surface);
+    border-top: 1px solid rgba(200,200,200,0.04);
+    border-bottom: 1px solid rgba(200,200,200,0.04);
+    position: relative;
+    overflow: hidden;
+    padding: 7rem 5rem;
+  }
+
+  #sg-field-report::before {
+    content: 'STOMPGUARD';
+    position: absolute;
+    right: -3rem; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: var(--font-head);
+    font-size: 8rem;
+    letter-spacing: 0.1em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,200,200,0.03);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  #sg-field-report .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #sg-field-report .section-eyebrow::before { content: '//'; color: var(--chrome-lo); }
+
+  #sg-field-report .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--chrome-hi);
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+
+  #sg-field-report .field-intro {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 460px;
+  }
+
+  #sg-field-report .field-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  #sg-field-report .field-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  #sg-field-report .spec-card {
+    background: var(--black);
+    border: 1px solid rgba(200,200,200,0.06);
+    padding: 1.5rem;
+    position: relative;
+    transition: border-color 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  #sg-field-report .spec-card:hover { border-color: rgba(200,200,200,0.15); }
+
+  #sg-field-report .spec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--red);
+    opacity: 0.6;
+  }
+
+  #sg-field-report .spec-icon { font-size: 1.2rem; margin-bottom: 0.8rem; display: block; }
+
+  #sg-field-report .spec-name {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--chrome-hi);
+    margin-bottom: 0.4rem;
+  }
+
+  #sg-field-report .spec-desc {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  #sg-field-report .field-visual { position: relative; }
+
+  #sg-field-report .field-img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--black);
+    border: 1px solid rgba(200,200,200,0.06);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+  }
+
+  #sg-field-report .field-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: grayscale(60%) contrast(1.2);
+  }
+
+  #sg-field-report .field-stamp {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 160px; height: 160px;
+    background: var(--surface2);
+    border: 1px solid rgba(200,200,200,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px);
+  }
+
+  #sg-field-report .field-stamp-num {
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    color: var(--chrome-hi);
+    line-height: 1;
+  }
+
+  #sg-field-report .field-stamp-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--chrome-lo);
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 900px) {
+    #sg-field-report .field-layout { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  @media (max-width: 600px) {
+    #sg-field-report { padding: 4rem 1.5rem; }
+    #sg-field-report .field-specs { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section id="sg-field-report">
+  <div class="field-layout">
+    <div>
+      <div class="section-eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      <p class="field-intro">{{ section.settings.intro }}</p>
+      <div class="field-specs">
+        {%- for block in section.blocks -%}
+          <div class="spec-card" {{ block.shopify_attributes }}>
+            <span class="spec-icon">{{ block.settings.icon }}</span>
+            <div class="spec-name">{{ block.settings.name }}</div>
+            <div class="spec-desc">{{ block.settings.desc }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="field-visual">
+      <div class="field-img">
+        {%- if section.settings.visual_image != blank -%}
+          <img src="{{ section.settings.visual_image | img_url: '800x' }}" alt="{{ section.settings.visual_alt | escape }}"/>
+        {%- endif -%}
+      </div>
+      <div class="field-stamp">
+        <div class="field-stamp-num">{{ section.settings.stamp_num }}</div>
+        <div class="field-stamp-label">{{ section.settings.stamp_label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Field Report",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Why StompGuard"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Built for Serious Players"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro Paragraph",
+      "default": "Your pedalboard is your livelihood. StompGuard protectors are precision-manufactured to keep your gear safe through knocks, liquid, and the chaos of live performance."
+    },
+    {
+      "type": "image_picker",
+      "id": "visual_image",
+      "label": "Visual Image"
+    },
+    {
+      "type": "text",
+      "id": "visual_alt",
+      "label": "Visual Image Alt",
+      "default": "StompGuard on stage"
+    },
+    {
+      "type": "text",
+      "id": "stamp_num",
+      "label": "Stamp Number",
+      "default": "100%"
+    },
+    {
+      "type": "text",
+      "id": "stamp_label",
+      "label": "Stamp Label",
+      "default": "Satisfaction Guaranteed"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🎯"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Spec Name",
+          "default": "Precision Fit"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Spec Description",
+          "default": "Cut to exact specs for your specific pedal model. No gaps, no wobble."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Field Report",
+      "blocks": [
+        { "type": "spec", "settings": { "icon": "🎯", "name": "Precision Fit", "desc": "Cut to exact specs for your specific pedal model. No gaps, no wobble." } },
+        { "type": "spec", "settings": { "icon": "🔒", "name": "Magnetic Secure", "desc": "Select covers use magnets for tool-free removal between gigs." } },
+        { "type": "spec", "settings": { "icon": "🇺🇸", "name": "US Based", "desc": "Fast order fulfillment and real human customer support." } },
+        { "type": "spec", "settings": { "icon": "🎸", "name": "Gig Tested", "desc": "Designed by musicians who play live and understand the risks." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
