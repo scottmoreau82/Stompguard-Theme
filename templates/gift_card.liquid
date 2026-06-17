@@ -1,0 +1,8 @@
+{% section 'section-nav' %}
+<main style="padding:7rem 2rem 4rem;max-width:600px;margin:0 auto;min-height:60vh;text-align:center;">
+  <h1 style="font-family:var(--font-head);font-size:2rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--chrome-hi);margin-bottom:1.5rem;">Gift Card</h1>
+  <div style="font-family:var(--font-mono);font-size:2rem;color:var(--chrome-hi);margin-bottom:1rem;">{{ gift_card.balance | money }}</div>
+  <img src="{{ gift_card.qr_identifier | payment_icon_png_url }}" alt="" />
+  <div style="font-family:var(--font-mono);font-size:1rem;color:var(--text);letter-spacing:0.2em;margin-top:1rem;">{{ gift_card.code | format_code }}</div>
+</main>
+{% section 'section-footer' %}
