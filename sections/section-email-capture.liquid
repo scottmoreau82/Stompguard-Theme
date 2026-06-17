@@ -1,0 +1,78 @@
+{% comment %} StompGuard — Email Capture {% endcomment %}
+
+<style>
+  #sg-email-capture {
+    background: var(--surface);
+    border-top: 1px solid rgba(200,200,200,0.06);
+    border-bottom: 1px solid rgba(200,200,200,0.06);
+    padding: 4rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  #sg-email-capture .email-capture-copy { flex: 1; min-width: 260px; }
+  #sg-email-capture .email-capture-eyebrow { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 0.6rem; }
+  #sg-email-capture .email-capture-copy h2 { font-family: var(--font-head); font-size: 2rem; letter-spacing: 0.06em; color: var(--text); line-height: 1.1; margin-bottom: 0.5rem; }
+  #sg-email-capture .email-capture-copy p { font-family: var(--font-body); font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  #sg-email-capture .email-capture-form { display: flex; gap: 0; flex: 1; min-width: 280px; max-width: 480px; }
+  #sg-email-capture .email-capture-input {
+    flex: 1; background: var(--black); border: 1px solid var(--gunmetal); border-right: none;
+    color: var(--text); font-family: var(--font-mono); font-size: 0.78rem; padding: 12px 16px;
+    outline: none; transition: border-color 0.2s;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+  }
+  #sg-email-capture .email-capture-input:focus { border-color: var(--red); }
+  #sg-email-capture .email-capture-input::placeholder { color: var(--muted); }
+  #sg-email-capture .email-capture-btn {
+    background: var(--red); color: var(--chrome-hi); border: 1px solid var(--red-hi);
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 12px 20px; cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  #sg-email-capture .email-capture-btn:hover { background: var(--red-hi); }
+  #sg-email-capture .email-capture-msg { font-family: var(--font-mono); font-size: 0.76rem; margin-top: 8px; display: none; }
+  #sg-email-capture .email-capture-msg.show { display: block; }
+  #sg-email-capture .email-capture-msg.ok { color: #2ecc71; }
+  #sg-email-capture .email-capture-msg.err { color: #e74c3c; }
+  @media (max-width: 768px) {
+    #sg-email-capture { padding: 3rem 1.5rem; flex-direction: column; }
+    #sg-email-capture .email-capture-form { width: 100%; max-width: 100%; }
+  }
+</style>
+
+<section id="sg-email-capture">
+  <div class="email-capture-copy">
+    <div class="email-capture-eyebrow">// {{ section.settings.eyebrow }}</div>
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+  <div>
+    {%- form 'customer', id: 'sg-newsletter' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="email-capture-form">
+        <input type="email" name="contact[email]" class="email-capture-input" placeholder="your@email.com" required>
+        <button type="submit" class="email-capture-btn">{{ section.settings.button_label }} &rarr;</button>
+      </div>
+      {%- if form.posted_successfully? -%}
+        <div class="email-capture-msg ok show">Thanks — you're subscribed.</div>
+      {%- elsif form.errors -%}
+        <div class="email-capture-msg err show">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Email Capture",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Stay in the loop" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Gear News. No Noise." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "New products, restocks, and exclusive offers. One email. Unsubscribe anytime." },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Subscribe" }
+  ],
+  "presets": [ { "name": "Email Capture" } ]
+}
+{% endschema %}
