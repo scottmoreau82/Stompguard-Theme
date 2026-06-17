@@ -1,0 +1,16 @@
+{% section 'section-nav' %}
+<main style="padding:7rem 2rem 4rem;max-width:800px;margin:0 auto;min-height:60vh;">
+  <h1 style="font-family:var(--font-head);font-size:2rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--chrome-hi);margin-bottom:1rem;">My Account</h1>
+  <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);margin-bottom:2rem;">Welcome, {{ customer.first_name | default: customer.email }} &middot; <a href="{{ routes.account_logout_url }}" style="color:var(--red);">Logout</a></p>
+  <h2 style="font-family:var(--font-head);font-size:1.2rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--chrome-hi);margin-bottom:1rem;">Order History</h2>
+  {% paginate customer.orders by 20 %}
+    {% for order in customer.orders %}
+      <a href="{{ order.customer_url }}" style="display:flex;justify-content:space-between;padding:1rem;background:var(--surface);border:1px solid rgba(200,200,200,0.06);margin-bottom:0.5rem;font-family:var(--font-mono);font-size:0.8rem;color:var(--text);">
+        <span>{{ order.name }}</span><span>{{ order.created_at | date: '%b %d, %Y' }}</span><span>{{ order.total_price | money }}</span>
+      </a>
+    {% else %}
+      <p style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);">No orders yet.</p>
+    {% endfor %}
+  {% endpaginate %}
+</main>
+{% section 'section-footer' %}
