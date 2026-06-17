@@ -1,0 +1,149 @@
+{% comment %} StompGuard — Footer Section {% endcomment %}
+
+<style>
+  #sg-footer {
+    background: var(--black);
+    border-top: 1px solid rgba(200,200,200,0.06);
+    padding: 4rem 5rem 2rem;
+  }
+  #sg-footer .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(200,200,200,0.05);
+  }
+  #sg-footer .footer-brand-row { display: flex; align-items: center; gap: 10px; }
+  #sg-footer .footer-brand img { height: 36px; width: auto; }
+  #sg-footer .nav-wordmark {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--chrome-hi);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  #sg-footer .nav-wordmark span {
+    color: var(--chrome-lo);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    display: block;
+    margin-top: -6px;
+    font-family: var(--font-mono);
+  }
+  #sg-footer .footer-brand p {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-top: 1rem;
+    max-width: 280px;
+    letter-spacing: 0.05em;
+  }
+  #sg-footer .footer-col-title {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #sg-footer .footer-col-title::before { content: '//'; color: var(--chrome-lo); }
+  #sg-footer .footer-links { list-style: none; }
+  #sg-footer .footer-links li { margin-bottom: 0.6rem; }
+  #sg-footer .footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  #sg-footer .footer-links a:hover { color: var(--chrome-hi); }
+  #sg-footer .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+  }
+  @media (max-width: 900px) { #sg-footer .footer-top { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { #sg-footer { padding: 3rem 1.5rem 2rem; } #sg-footer .footer-top { grid-template-columns: 1fr; } }
+</style>
+
+<footer id="sg-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        {% if section.settings.logo != blank %}
+          <img src="{{ section.settings.logo | image_url: width: 72 }}" alt="{{ shop.name }}"/>
+        {% else %}
+          <img src="{{ 'RoboLogoSVGfinal.png' | asset_url }}" alt="{{ shop.name }}"/>
+        {% endif %}
+        <div class="nav-wordmark">{{ section.settings.wordmark }}<span>{{ section.settings.tagline }}</span></div>
+      </div>
+      <p>{{ section.settings.brand_blurb }}</p>
+    </div>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'link_column' %}
+        <div {{ block.shopify_attributes }}>
+          <div class="footer-col-title">{{ block.settings.title }}</div>
+          <ul class="footer-links">
+            {%- assign labels = block.settings.link_labels | split: '|' -%}
+            {%- assign urls = block.settings.link_urls | split: '|' -%}
+            {%- for label in labels -%}
+              <li><a href="{{ urls[forloop.index0] | strip | default: '#' }}">{{ label | strip }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+    <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);opacity:0.4;">{{ section.settings.version_tag }}</span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo Image" },
+    { "type": "text", "id": "wordmark", "label": "Wordmark", "default": "StompGuard" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Pedal Protection Systems" },
+    { "type": "textarea", "id": "brand_blurb", "label": "Brand Blurb", "default": "Your source for premium pedal protection. US based for fast order fulfillment and exceptional customer service." },
+    { "type": "text", "id": "version_tag", "label": "Version Tag", "default": "SG-v2.0" }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link Column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Column Title", "default": "Shop" },
+        { "type": "textarea", "id": "link_labels", "label": "Link Labels (separate with |)", "default": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech" },
+        { "type": "textarea", "id": "link_urls", "label": "Link URLs (separate with |, match label order)", "default": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "link_column", "settings": { "title": "Shop", "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech", "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section" } },
+        { "type": "link_column", "settings": { "title": "Support", "link_labels": "Contact Us|Shipping Info|Returns|FAQ", "link_urls": "#|#|#|#" } },
+        { "type": "link_column", "settings": { "title": "Company", "link_labels": "About|Privacy Policy|Terms of Service", "link_urls": "#|#|#" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
