@@ -85,20 +85,12 @@
     "footer": {
       "type": "section-footer",
       "blocks": {
-        "link_column_PRWrtc": {
-          "type": "link_column",
-          "settings": {
-            "title": "Shop",
-            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
-            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
-          }
-        },
         "link_column_PTrP9r": {
           "type": "link_column",
           "settings": {
-            "title": "Shop",
-            "link_labels": "All Products|Acrylic Covers|Quad Cortex|Nano Cortex|Digitech",
-            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
+            "title": "Support",
+            "link_labels": "Link Labels: Contact Us|Shipping Info|Returns|FAQ",
+            "link_urls": "Link URLs: /pages/contact-page|#|#|#"
           }
         },
         "link_column_QRMFNE": {
@@ -111,7 +103,6 @@
         }
       },
       "block_order": [
-        "link_column_PRWrtc",
         "link_column_PTrP9r",
         "link_column_QRMFNE"
       ],
