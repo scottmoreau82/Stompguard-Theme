@@ -75,6 +75,7 @@
     },
     "email-capture": {
       "type": "section-email-capture",
+      "disabled": true,
       "settings": {
         "eyebrow": "Stay in the loop",
         "title": "Gear News. No Noise.",
