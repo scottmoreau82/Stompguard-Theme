@@ -25,8 +25,8 @@
     line-height: 0.95;
     text-align: center;
   }
-  #sg-reviews .intel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(200,200,200,0.05); }
-  #sg-reviews .intel-card { background: var(--surface); padding: 2rem; position: relative; }
+  #sg-reviews .intel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid rgba(200,200,200,0.05); transition: opacity 0.3s ease; }
+  #sg-reviews .intel-card { background: var(--surface); padding: 2rem; position: relative; min-height: 280px; }
   #sg-reviews .intel-card::before {
     content: '';
     position: absolute;
@@ -111,7 +111,7 @@
   function sgInitials(name) { var p=name.split(' '); return (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase(); }
   function sgFormatDate(d) { if(!d) return ''; var dt=new Date(d); return dt.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
 
-  function sgRenderReviews() {
+  function sgRenderReviews(fade) {
     var grid = document.getElementById('sg-reviewGrid');
     var nav = document.getElementById('sg-reviewNav');
     var dots = document.getElementById('sg-reviewDots');
@@ -119,6 +119,7 @@
     var pages = Math.ceil(sgAllReviews.length / sgReviewPerPage);
     var start = sgReviewCurrentPage * sgReviewPerPage;
     var slice = sgAllReviews.slice(start, start + sgReviewPerPage);
+    function doRender() {
     grid.innerHTML = slice.map(function(r) {
       var photos = (r.photos||[]).slice(0,3).map(function(p){
         return '<img class="intel-photo" src="'+p+'" alt="Review photo" data-url="'+r.url+'" onclick="window.open(this.dataset.url,\'_blank\')">';
@@ -142,16 +143,19 @@
     for(var i=0;i<pages;i++){
       var btn = document.createElement('button');
       btn.className = 'intel-nav-dot' + (i===sgReviewCurrentPage?' active':'');
-      btn.onclick = (function(p){ return function(){ sgReviewCurrentPage=p; sgRenderReviews(); sgResetReviewTimer(); }; })(i);
+      btn.onclick = (function(p){ return function(){ sgReviewCurrentPage=p; sgRenderReviews(true); sgResetReviewTimer(); }; })(i);
       dots.appendChild(btn);
     }
     nav.style.display = pages > 1 ? 'flex' : 'none';
+    if(fade) { grid.style.opacity='0'; setTimeout(function(){ grid.style.opacity='1'; }, 20); }
+    } // end doRender
+    if(fade) { grid.style.opacity='0'; setTimeout(doRender, 300); } else { doRender(); grid.style.opacity='1'; }
   }
 
   function sgReviewPage(dir) {
     var pages = Math.ceil(sgAllReviews.length / sgReviewPerPage);
     sgReviewCurrentPage = (sgReviewCurrentPage + dir + pages) % pages;
-    sgRenderReviews();
+    sgRenderReviews(true);
     sgResetReviewTimer();
   }
 
