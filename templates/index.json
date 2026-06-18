@@ -98,7 +98,7 @@
           "settings": {
             "title": "Company",
             "link_labels": "About|Privacy Policy|Terms of Service",
-            "link_urls": "#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section|#sg-products-section"
+            "link_urls": "#|#|#|"
           }
         }
       },
