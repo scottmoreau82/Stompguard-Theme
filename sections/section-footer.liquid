@@ -65,6 +65,7 @@
     transition: color 0.2s;
   }
   #sg-footer .footer-links a:hover { color: var(--chrome-hi); }
+  #sg-footer .footer-links a[data-modal] { cursor: pointer; }
   #sg-footer .footer-bottom {
     display: flex;
     justify-content: space-between;
@@ -114,6 +115,29 @@
     <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);opacity:0.4;">{{ section.settings.version_tag }}</span>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var modalMap = {
+      'shipping info': 'modal-shipping',
+      'returns': 'modal-returns',
+      'faq': 'modal-faq',
+      'about': 'modal-about',
+      'privacy policy': 'modal-privacy',
+      'terms of service': 'modal-terms'
+    };
+    document.querySelectorAll('#sg-footer .footer-links a').forEach(function(link) {
+      var text = link.textContent.trim().toLowerCase();
+      if (modalMap[text]) {
+        link.setAttribute('href', '#');
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (typeof sgOpenModal === 'function') sgOpenModal(modalMap[text]);
+        });
+      }
+    });
+  });
+</script>
 
 {% schema %}
 {
