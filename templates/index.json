@@ -90,7 +90,7 @@
           "type": "link_column",
           "settings": {
             "title": "Support",
-            "link_labels": "Link Labels: Contact Us|Shipping Info|Returns|FAQ",
+            "link_labels": "Contact Us|Shipping Info|Returns|FAQ",
             "link_urls": "/pages/contact-page|#|#|#"
           }
         },
