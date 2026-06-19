@@ -63,6 +63,7 @@ body {
   font-family: var(--font-body);
   font-weight: 400;
   overflow-x: hidden;
+  overflow-y: auto;
   cursor: crosshair;
   min-height: 100vh;
   display: flex;
@@ -101,6 +102,6 @@ body::after {
 </head>
 
 <body class="template-{{ template.name }}">
-  {{ content_for_layout }}
+  <main style="flex:1;display:flex;flex-direction:column;">{{ content_for_layout }}</main>
 </body>
 </html>
