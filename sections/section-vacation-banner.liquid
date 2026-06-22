@@ -1,0 +1,104 @@
+{% comment %} StompGuard — Vacation Banner Section {% endcomment %}
+
+{% if section.settings.enabled %}
+<style>
+  #sg-vacation-banner {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 199;
+    background: var(--red);
+    border-bottom: 2px solid var(--red-hi);
+    border-top: 2px solid var(--red-hi);
+    padding: 10px 2rem;
+    text-align: center;
+    animation: sg-vacation-pulse 2s ease-in-out infinite;
+  }
+  @keyframes sg-vacation-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(176,0,0,0.4), inset 0 0 0 0 rgba(176,0,0,0.1); }
+    50% { box-shadow: 0 0 12px 4px rgba(176,0,0,0.5), inset 0 0 20px 0 rgba(176,0,0,0.15); }
+  }
+  #sg-vacation-banner .sg-vb-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  #sg-vacation-banner .sg-vb-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--chrome-lo);
+    opacity: 0.8;
+  }
+  #sg-vacation-banner .sg-vb-label::before { content: '// '; }
+  #sg-vacation-banner .sg-vb-message {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    color: var(--chrome-hi);
+    text-transform: uppercase;
+  }
+  #sg-vacation-banner .sg-vb-dates {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--chrome-lo);
+    text-transform: uppercase;
+  }
+  #sg-vacation-banner .sg-vb-dates::before { content: '[ '; }
+  #sg-vacation-banner .sg-vb-dates::after { content: ' ]'; }
+</style>
+
+<div id="sg-vacation-banner">
+  <div class="sg-vb-inner">
+    <span class="sg-vb-label">{{ section.settings.label }}</span>
+    <span class="sg-vb-message">{{ section.settings.message }}</span>
+    {% if section.settings.dates != blank %}
+      <span class="sg-vb-dates">{{ section.settings.dates }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  /* Push page content down to account for banner height */
+  #sg-nav + main,
+  #sg-nav ~ * { margin-top: 42px; }
+</style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Vacation Banner",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable Vacation Banner",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label (left tag)",
+      "default": "Notice"
+    },
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "Orders placed during this period will ship on our return."
+    },
+    {
+      "type": "text",
+      "id": "dates",
+      "label": "Dates (optional)",
+      "default": "Jun 20 — Jun 27"
+    }
+  ],
+  "presets": [ { "name": "Vacation Banner" } ]
+}
+{% endschema %}
