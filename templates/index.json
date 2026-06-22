@@ -109,10 +109,20 @@
     "modals": {
       "type": "section-modals",
       "settings": {}
+    },
+    "vacation-banner": {
+      "type": "section-vacation-banner",
+      "settings": {
+        "enabled": false,
+        "label": "Notice",
+        "message": "Orders placed during this period will ship on our return.",
+        "dates": ""
+      }
     }
   },
   "order": [
     "nav",
+    "vacation-banner",
     "hero",
     "products",
     "field-report",
