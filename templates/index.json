@@ -18,6 +18,16 @@
         "contact_page": "contact-page"
       }
     },
+    "section_vacation_banner_FwYmHC": {
+      "type": "section-vacation-banner",
+      "name": "Vacation Banner",
+      "settings": {
+        "enabled": true,
+        "label": "Notice",
+        "message": "Orders placed during this period will ship on our return.",
+        "dates": "Jun 23 — Jun 26"
+      }
+    },
     "hero": {
       "type": "section-hero",
       "settings": {
@@ -117,16 +127,6 @@
         "tagline": "Pedal Protection Systems",
         "brand_blurb": "Your source for premium pedal protection. US based for fast order fulfillment and exceptional customer service.",
         "version_tag": "SG-v2.0"
-      }
-    },
-    "section_vacation_banner_FwYmHC": {
-      "type": "section-vacation-banner",
-      "name": "Vacation Banner",
-      "settings": {
-        "enabled": false,
-        "label": "Notice",
-        "message": "Orders placed during this period will ship on our return.",
-        "dates": "Jun 20 — Jun 27"
       }
     }
   },
