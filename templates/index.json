@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "nav": {
@@ -74,6 +83,10 @@
         "button_label": "Subscribe"
       }
     },
+    "modals": {
+      "type": "section-modals",
+      "settings": {}
+    },
     "footer": {
       "type": "section-footer",
       "blocks": {
@@ -106,23 +119,20 @@
         "version_tag": "SG-v2.0"
       }
     },
-    "modals": {
-      "type": "section-modals",
-      "settings": {}
-    },
-    "vacation-banner": {
+    "section_vacation_banner_FwYmHC": {
       "type": "section-vacation-banner",
+      "name": "Vacation Banner",
       "settings": {
         "enabled": false,
         "label": "Notice",
         "message": "Orders placed during this period will ship on our return.",
-        "dates": ""
+        "dates": "Jun 20 — Jun 27"
       }
     }
   },
   "order": [
     "nav",
-    "vacation-banner",
+    "section_vacation_banner_FwYmHC",
     "hero",
     "products",
     "field-report",
