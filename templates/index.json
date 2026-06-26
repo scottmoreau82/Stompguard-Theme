@@ -22,7 +22,7 @@
       "type": "section-vacation-banner",
       "name": "Vacation Banner",
       "settings": {
-        "enabled": true,
+        "enabled": false,
         "label": "Notice",
         "message": "Orders placed during this period will ship on our return.",
         "dates": "Jun 23 — Jun 26"
